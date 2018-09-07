@@ -55,10 +55,24 @@ class SqlHandler(object):
             logger.info('read data from sql OK')
         return data
 
-    def insert_data(self,server,username,password,dbname,query):
+    def insert_data(self,server,username,password,dbname,query,data):
+        """
+        This method insert values into db
+        Args:
+            connect details,all str,example as below
+            SERVER = 10.166.49.31\CNWUTWIT0001
+            USERNAME = Mii_db_r
+            PASSWORD = faurecia1
+            DBNAME = MII_db
+            QUERY = SQL Query
+            DATA = date you want to insert,as executemany method,data format normally
+            [(),(),()]
+
+        Returns:None
+        """
         conn = pymssql.connect(server,username,password,dbname)
-        cursor = conn.cursor(as_dict=True)
-        cursor.execute(query)
+        cursor = conn.cursor()
+        cursor.executemany(query,data)
         try:
             conn.commit()
             logger.info('insert data from sql OK')
@@ -76,13 +90,13 @@ if __name__ == '__main__':
     query7 = "INSERT INTO alert_cs_stock_list (alert_mii_id,alert_mii_date,alert_mii_plant,alert_mii_mtl,alert_mii_loc,alert_mii_qty,alert_mii_comm) VALUES ('1','2018-05-14 03:47:02.000','1038','test','IN10','100','TEST')"
     query8 = "SELECT ALERT_ID,PLANT,PART,alert_date,alert_cs_time FROM View_alert_list_open_query_stoc"
     query9 = "SELECT ALERT_ID,PLANT,PART,alert_date FROM View_alert_list_open_query_close"
+    query10 = """INSERT INTO [NON_TRS_TICKET_SPLIT] ([PLANT] ,[TICKET] ,[STATUS] ,[CAUSE] ,[DURATION] ,[CAUSE_1] ,[CAUSE_2] ,[EQUIPMENT] ,[REMARK] VALUES ('1038', '10008', 'CLSD', '2', '0:14:00', '201', '', 'E160067', '')"""
     ftesSql = SqlHandler()
     #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','MII_db',query8)
-    data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_rw','faurecia1','MII_db',query9)
+    data = ftesSql.insert_data('10.166.49.31\CNWUTWIT0001','Mii_db_rw','faurecia1','MII_db',query10)
     #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','E_Leveing_PQ',query)
     #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','eTOP5',query5)
     #kittingOrderCode_all = list(set([i['kittingOrderCode'] for i in data]))
     #print(etop5)
-    print(data)
     #for i in data:
     #    print(i)
