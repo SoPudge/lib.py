@@ -79,6 +79,28 @@ class SqlHandler(object):
         except:
             logger.warning('insert error, please check the query')
 
+    def del_data(self,server,username,password,dbname,query):
+        """
+        This method delete data from db
+        Args:
+            connect details,all str,example as below
+            SERVER = 10.166.49.31\CNWUTWIT0001
+            USERNAME = Mii_db_r
+            PASSWORD = faurecia1
+            DBNAME = MII_db
+            QUERY = SQL Query
+
+        Returns:None
+        """
+        conn = pymssql.connect(server,username,password,dbname)
+        cursor = conn.cursor()
+        cursor.execute(query)
+        try:
+            conn.commit()
+            logger.info('delete data from sql OK')
+        except:
+            logger.warning('delete error, please check the query')
+
 if __name__ == '__main__':
     #This section is test case for sending data via proxy
     query = "SELECT kittingOrderCode,partdesc,line,station,material,boxqty,pdastatus FROM View_kitting_order_detail_toDD"
