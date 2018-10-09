@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- 
+import sys
 import logging
-import time
 
 class Logger(object):
     def __init__(self,logger):
@@ -13,9 +13,8 @@ class Logger(object):
         self.logger.setLevel(logging.DEBUG)
 
         # creat a handler to output log to file
-        rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
         log_name = 'log.log'
-        fh = logging.FileHandler(log_name)
+        fh = logging.FileHandler(sys.path[0] + '/' + log_name)
         fh.setLevel(logging.INFO)
 
         # creat a handler to output log to stream 
@@ -33,6 +32,7 @@ class Logger(object):
 
     def info(self,msg):
         self.logger.info(msg)
+        print(sys.path[0])
 
     def warning(self,msg):
         self.logger.warning(msg)
