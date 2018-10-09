@@ -32,7 +32,6 @@ class Logger(object):
 
     def info(self,msg):
         self.logger.info(msg)
-        print(sys.path[0])
 
     def warning(self,msg):
         self.logger.warning(msg)
