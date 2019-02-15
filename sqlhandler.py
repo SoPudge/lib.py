@@ -5,9 +5,9 @@ import _mssql
 import decimal
 import pymssql
 from logger import Logger
-decimal.__version__
-uuid.ctypes.__version__
-_mssql.__version__
+#decimal.__version__
+#uuid.ctypes.__version__
+#_mssql.__version__
 
 logger = Logger('ms_sql_handler')
 class SqlHandler(object):
@@ -113,12 +113,16 @@ if __name__ == '__main__':
     query8 = "SELECT ALERT_ID,PLANT,PART,alert_date,alert_cs_time FROM View_alert_list_open_query_stoc"
     query9 = "SELECT ALERT_ID,PLANT,PART,alert_date FROM View_alert_list_open_query_close"
     query10 = """INSERT INTO [NON_TRS_TICKET_SPLIT] ([PLANT] ,[TICKET] ,[STATUS] ,[CAUSE] ,[DURATION] ,[CAUSE_1] ,[CAUSE_2] ,[EQUIPMENT] ,[REMARK] VALUES ('1038', '10008', 'CLSD', '2', '0:14:00', '201', '', 'E160067', '')"""
+    query11 = "SELECT [miiapi_infor_mstr_id],[miiapi_infor_mstr_type],[miiapi_infpr_mstr_plant] FROM [dbo].[miiapi_infor_mstr]"
+    query12 = "SELECT [miiapi_infor_det_id],[miiapi_infor_mstr_id],[miiapi_infor_det_field],[miiapi_infor_det_value] FROM [dbo].[miiapi_infor_det]"
     ftesSql = SqlHandler()
-    #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','MII_db',query8)
-    data = ftesSql.insert_data('10.166.49.31\CNWUTWIT0001','Mii_db_rw','faurecia1','MII_db',query10)
+    data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','WIT',query12)
+    
+    #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','MII_db',query4)
+    #data = ftesSql.insert_data('10.166.49.31\CNWUTWIT0001','Mii_db_rw','faurecia1','MII_db',query10)
     #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','E_Leveing_PQ',query)
     #data = ftesSql.get_data('10.166.49.31\CNWUTWIT0001','Mii_db_r','faurecia1','eTOP5',query5)
     #kittingOrderCode_all = list(set([i['kittingOrderCode'] for i in data]))
     #print(etop5)
-    #for i in data:
-    #    print(i)
+    for i in data:
+        print(i)
