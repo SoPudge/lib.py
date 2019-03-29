@@ -30,21 +30,21 @@ class Logger(object):
         self.logger.setLevel(logging.DEBUG)
 
         # creat a handler to output log to file
-        fh = logging.FileHandler(file_path + '/' + file_name)
-        fh.setLevel(logging.INFO)
+        self.fh = logging.FileHandler(file_path + '/' + file_name)
+        self.fh.setLevel(logging.INFO)
 
         # creat a handler to output log to stream 
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
+        self.ch = logging.StreamHandler()
+        self.ch.setLevel(logging.INFO)
 
         # formatter of log 
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        fh.setFormatter(formatter)
-        ch.setFormatter(formatter)
+        self.fh.setFormatter(formatter)
+        self.ch.setFormatter(formatter)
 
         # add handler to logger
-        self.logger.addHandler(fh)
-        self.logger.addHandler(ch)
+        self.logger.addHandler(self.fh)
+        self.logger.addHandler(self.ch)
 
     def info(self,msg):
         self.logger.info(msg)
@@ -60,6 +60,7 @@ class Logger(object):
 
     def close(self):
         self.logger.removeHandler(self.fh)
+        self.logger.removeHandler(self.ch)
         
 if __name__ == '__main__':
     #kw = {'file_path':'N:\\005_Software','file_name':'abc.log'}
